@@ -1,18 +1,15 @@
-# Use Node.js 20 Alpine as base
-FROM node:20-alpine
-
-# Set working directory
+# Stage 1 — build
+FROM node:18-alpine AS build
 WORKDIR /app
-
-# Copy package files and install dependencies
 COPY package*.json ./
-RUN npm install --legacy-peer-deps
-
-# Copy the rest of the app
+RUN npm ci
 COPY . .
 
-# Expose the port your app runs on
-EXPOSE 3000
+RUN npm run build
 
-# Start the application
-CMD ["npm", "start"]
+FROM nginx:stable-alpine
+COPY --from=build /app/build /usr/share/nginx/html    
+
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
