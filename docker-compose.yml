@@ -32,10 +32,10 @@ services:
     environment:
       - spring.datasource.url=jdbc:mysql://mysqldb:3306/ecommerce?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       - spring.datasource.username=root
-      - spring.datasource.password=docker
+      - spring.datasource.password=admin
 
   frontend:
-    image: sambhavsurthi/inventoryms-docker-frontend:latest
+    image: bhaskar23406/ecommerce-docker-frontend:latest
     container_name: react
     ports:
       - "3000:80"
